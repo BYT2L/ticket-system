@@ -1,0 +1,2217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="favicon.ico">
+	<meta name="robots" content="noindex, nofollow">
+	<meta name="description" content="Submit your tech service request securely and easily.">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bringing Your Tech to Life - Ticket Form</title>
+    <style>
+	  /* Global Reset */
+	* {
+		box-sizing: border-box;
+	}
+
+	body {
+		background-color: #f0f0f0;
+		color: #333;
+		font-family: Arial, sans-serif;
+		margin: 0;
+		padding: 0;
+	}
+
+	html {
+		scroll-behavior: smooth;
+	}
+
+	/* Form Elements General */
+	form,
+	form h2,
+	form label,
+	form span,
+	form input,
+	form select,
+	form textarea,
+	form a {
+		color: #333;
+		font-family: Arial, sans-serif;
+		font-size: 16px;
+		font-weight: normal;
+	}
+
+	form {
+		background-color: #ffffff;
+		border-radius: 8px;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		margin: 20px auto;
+		max-width: 800px;
+		padding: 20px;
+	}
+
+	form h2 {
+		color: #2C3E50;
+		font-size: 20px;
+		font-weight: bold;
+	}
+
+	form a {
+		color: #2C3E50;
+		text-decoration: underline;
+		transition: color 0.2s ease;
+	}
+
+	form a:hover {
+		color: #27ae60;
+		text-decoration: none;
+	}
+
+	label {
+		display: block;
+		margin-top: 10px;
+	}
+
+	label[for] {
+		cursor: pointer;
+	}
+
+	input,
+	select,
+	textarea {
+		background-color: #fafafa;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		margin-bottom: 10px;
+		margin-top: 5px;
+		padding: 10px;
+		transition: all 0.2s ease;
+		width: 100%;
+	}
+
+	input[type="file"] {
+		background-color: #fff;
+		border-radius: 4px;
+		cursor: pointer;
+	}
+
+	input[type="file"]:hover {
+		border-color: #2ecc71;
+	}
+
+	textarea {
+		background-color: #fafafa;	
+	   min-height: 6em;
+		resize: vertical;
+	}
+
+	select[multiple] {
+		min-height: 8em;
+		padding: 10px;
+	}
+
+	fieldset {
+		border: 1px solid #ccc;
+		border-radius: 8px;
+		margin-bottom: 20px;
+		padding: 15px;
+		width: 100%;
+	}
+
+	legend {
+		color: #2C3E50;
+		font-size: 18px;
+		font-weight: bold;
+		padding: 0 10px;
+	}
+
+	/* Button Styles */
+	button {
+		background-color: #27ae60;
+		border: none;
+		border-radius: 4px;
+		color: #fff;
+		cursor: pointer;
+		font-family: Arial, sans-serif;
+		font-size: 16px;
+		margin-top: 20px;
+		max-width: 300px;
+		padding: 12px 20px;
+		transition: background-color 0.3s ease, transform 0.2s ease;
+		width: 100%;
+	}
+
+	button:hover {
+		background-color: #2ecc71;
+		font-weight: bold;
+		transform: translateY(-2px);
+	}
+
+	button:disabled {
+		cursor: not-allowed;
+		opacity: 0.7;
+	}
+
+	/* Form Layout Helpers */
+	.hidden {
+		display: none;
+	}
+
+	.form-checkbox-row {
+		align-items: center;
+		display: flex;
+		flex-wrap: wrap;
+		margin-bottom: 15px;
+		width: 100%;
+	}
+	
+	.form-checkbox-row .label-text {
+		flex-basis: 60%;
+		flex-shrink: 0;
+		white-space: normal;
+	}
+
+	.form-checkbox-row input[type="checkbox"] {
+		height: 20px;
+		margin-left: 10px;
+		width: 20px;
+	}
+
+	/* Responsive */
+	@media (max-width: 600px) {
+		form {
+			padding: 15px;
+		}
+
+		h2 {
+			font-size: 18px;
+		}
+
+		label {
+			font-size: 15px;
+			line-height: 1.4;
+			margin-top: 8px;
+		}
+
+		.form-checkbox-row .label-text {
+			flex-basis: 100%;
+			margin-bottom: 5px;
+		}
+	}
+
+	/* Other Components */
+	.spinner {
+		animation: spin 1s linear infinite;
+		border: 4px solid #f3f3f3;
+		border-radius: 50%;
+		border-top: 4px solid #27ae60;
+		display: inline-block;
+		height: 16px;
+		margin-right: 8px;
+		vertical-align: middle;
+		width: 16px;
+	}
+
+	@keyframes spin {
+		0% { transform: rotate(0deg); }
+		100% { transform: rotate(360deg); }
+	}
+
+	#submissionStatus {
+		color: #2C3E50;
+		font-style: italic;
+	}
+
+	.preview-img {
+		border-radius: 4px;
+		box-shadow: 0 0 5px rgba(0,0,0,0.2);
+	}
+
+	/* Utility Classes */
+	.sr-only {
+		border: 0;
+		clip: rect(0, 0, 0, 0);
+		height: 1px;
+		margin: -1px;
+		overflow: hidden;
+		padding: 0;
+		position: absolute !important;
+		width: 1px;
+	}
+
+	/* Shake Fields if Error Detected */ 
+	@keyframes shake {
+		0% { transform: translateX(0); }
+		25% { transform: translateX(-5px); }
+		50% { transform: translateX(5px); }
+		75% { transform: translateX(-5px); }
+		100% { transform: translateX(0); }
+	}
+
+	.input-error {
+		background-color: #ffe5e5;
+		border: 2px solid #cc0000 !important;
+		animation: shake 0.3s ease;
+	}
+
+	/* Flash Animation for Highlighting Focused Error Fields */
+	@keyframes focusFlash {
+		0% { background-color: #ffe5e5; }
+		50% { background-color: #ffffff; }
+		100% { background-color: #ffe5e5; }
+	}
+
+	.focus-flash {
+		animation: focusFlash 0.8s ease;
+	}
+
+	/* Focus State Accessibility */
+	input:focus,
+	input[type="checkbox"]:focus,
+	input[type="radio"]:focus,
+	select:focus,
+	textarea:focus,
+	button:focus {
+		outline: 2px solid #2ecc71;
+		outline-offset: 2px;
+	}
+
+	/* Form Error Banner */
+	.form-error-banner {
+		background-color: #ffe5e5;
+		border: 2px solid #cc0000;
+		color: #cc0000;
+		font-weight: bold;
+		padding: 10px;
+		margin-bottom: 20px;
+		border-radius: 8px;
+		text-align: center;
+	}
+
+	/* Form Error Message Style */
+	.form-error {
+		color: #cc0000;
+		font-weight: bold;
+		margin-top: 5px;
+		line-height: 1.4;
+	}
+  </style>
+</head>
+<body>
+  <!-- 🛡 FORM CONTENT STARTS HERE 🛡 -->
+    <form id="clientIntakeForm" action="https://script.google.com/macros/s/AKfycbxKUu4LglbgMw2biHLvi9tNtfNF4m00J2uFGczdM53sQHKrxTdmkLFVgQNh5fSKltfs/exec" method="POST">
+	<input type="text" name="website" style="display:none !important;" tabindex="-1" autocomplete="off">
+	<input type="hidden" name="userAgent" id="userAgent" autocomplete="off">
+	<input type="hidden" name="platform" id="platform" autocomplete="off">
+	<input type="hidden" name="screenResolution" id="screenResolution" autocomplete="off">
+	<input type="hidden" name="browserLanguage" id="browserLanguage" autocomplete="off">
+	<input type="hidden" name="formTimeElapsed" id="formTimeElapsed" autocomplete="off">
+	<input type="hidden" name="pageReferrer" id="pageReferrer" autocomplete="off">
+	<input type="hidden" name="javascriptEnabled" value="true" autocomplete="off">
+	<input type="hidden" name="navigatorProperties" id="navigatorProperties" autocomplete="off">
+	<div id="formErrorBanner" class="hidden form-error-banner" role="alert" aria-live="assertive"></div>
+
+	<!-- 🛡️ Server Side Validation Error Display Message 🛡️ -->
+	<div id="formErrors" style="display:none; background: #ffe0e0; border: 1px solid #ff7a7a; padding: 10px; margin-bottom: 20px; border-radius: 8px; color: #900;">
+		<ul id="errorList" style="padding-left: 20px; margin: 0;"></ul>
+	</div>
+	<h2><u>Client Information</u></h2>
+	<fieldset>
+	
+	   <legend>Client Information</legend>
+	   <label for="clientType">Are you a Business Client or Personal Client?</label>
+	   <select id="clientType" name="clientType" required>
+	   <option value="" selected disabled>Select One</option>  <!-- This ensures the user must pick an option -->
+	   <option value="business">Business</option>
+	   <option value="personal">Personal</option>
+	   </select>
+  
+	<!-- 🛡️ Client Details for Personal/Residential Clients 🛡️ -->
+	<div id="clientInputPersonalFields" class="hidden">
+		<label for="clientInputPersonalFirstName">First Name</label>
+		<input type="text" id="clientInputPersonalFirstName" name="personalFirstName" required autocomplete="given-name" placeholder="Enter First Name" minlength="2" maxlength="50">
+		<div id="clientInputPersonalFirstNameError" class="form-error hidden" role="alert">⚠️ Please enter a first name ⚠️</div>
+
+		<label for="clientInputPersonalLastName">Last Name</label>
+		<input type="text" id="clientInputPersonalLastName" name="personalLastName" required autocomplete="family-name" placeholder="Enter Last Name" minlength="2" maxlength="50">
+		<div id="clientInputPersonalLastNameError" class="form-error hidden" role="alert">⚠️ Please enter a last name ⚠️</div>
+
+		<label for="clientInputPersonalEmail">Email Address</label>
+		<input type="email" id="clientInputPersonalEmail" name="personalEmail" required autocomplete="email" placeholder="Enter email address - example: name@domain.com" title="Enter a valid email address (example: name@example.com)" minlength="5" maxlength="254">
+		<div id="clientInputPersonalEmailError" class="form-error hidden" role="alert">⚠️ Please enter a valid personal email address (example: name@example.com) ⚠️</div>
+
+		<label for="clientInputPersonalHomePhone">Home Phone</label>
+		<input type="tel" id="clientInputPersonalHomePhone" name="personalHomePhone" autocomplete="tel" placeholder="Enter phone number - example: (123) 456-7890" inputmode="tel" minlength="10" maxlength="14" pattern="^(\+?\d{1,2}\s?)?(\(\d{3}\)|\d{3})[.\-\s]?\d{3}[.\-\s]?\d{4}$" title="Enter a valid phone number like 123-456-7890 or (123) 456-7890">
+		<div id="clientInputPersonalHomePhoneError" class="form-error hidden" role="alert">⚠️ Please enter a valid Home Phone number. ⚠️</div>
+
+		<label for="clientInputPersonalCellPhone">Cell Phone</label>
+		<input type="tel" id="clientInputPersonalCellPhone" name="personalCellPhone" autocomplete="tel" placeholder="Enter phone number - example: (123) 456-7890" inputmode="tel" minlength="10" maxlength="14" pattern="^(\+?\d{1,2}\s?)?(\(\d{3}\)|\d{3})[.\-\s]?\d{3}[.\-\s]?\d{4}$" title="Enter a valid phone number like 123-456-7890 or (123) 456-7890">
+		<div id="clientInputPersonalCellPhoneError" class="form-error hidden" role="alert">⚠️ Please enter a valid Cell Phone number. ⚠️</div>
+
+		<label for="clientInputPersonalAddress">Home Address</label>
+		<input type="text" id="clientInputPersonalAddress" name="personalAddress" required autocomplete="street-address" placeholder="Enter Street Address" minlength="5" maxlength="150">
+		<div id="clientInputPersonalAddressError" class="form-error hidden" role="alert">⚠️ Please enter a valid Street Address ⚠️</div>
+
+		<label for="clientInputPersonalCity">City</label>
+		<input type="text" id="clientInputPersonalCity" name="personalCity" required autocomplete="address-level2" placeholder="Enter City Name" minlength="3" maxlength="50">
+		<div id="clientInputPersonalCityError" class="form-error hidden" role="alert">⚠️ Please enter a valid City ⚠️</div>
+
+		<label for="clientInputPersonalState">State</label>
+		<input type="text" id="clientInputPersonalState" name="personalState" required autocomplete="address-level1" placeholder="Enter State Abbreviation" minlength="2" maxlength="2" pattern="^[A-Za-z]{2}$" title="Enter a 2-letter state abbreviation (example: NC, NY, TX)">
+		<div id="clientInputPersonalStateError" class="form-error hidden" role="alert">⚠️ Please enter a valid State Abbreviation ⚠️</div>
+
+		<label for="clientInputPersonalZip">ZIP Code</label>
+		<input type="text" id="clientInputPersonalZip" name="personalZip" required autocomplete="postal-code" placeholder="Enter ZIP or ZIP+4" pattern="^\d{5}(-\d{4})?$" title="Enter a 5-digit ZIP or 9-digit ZIP+4 (e.g., 12345 or 12345-6789)" inputmode="numeric" minlength="5" maxlength="10">
+		<div id="clientInputPersonalZipError" class="form-error hidden" role="alert">⚠️ Please enter a valid Zip Code ⚠️</div>
+	</div>
+
+	<!-- 🛡️ Client Details for Business/Commercial Clients 🛡️ -->
+	<div id="clientInputBusinessFields" class="hidden">
+		<label for="clientInputBusinessFirstName">First Name</label>
+		<input type="text" id="clientInputBusinessFirstName" name="businessFirstName" required autocomplete="given-name" placeholder="Enter First Name" minlength="2" maxlength="50">
+		<div id="clientInputBusinessFirstNameError" class="form-error hidden" role="alert">⚠️ Please enter a first name ⚠️</div>
+
+		<label for="clientInputBusinessLastName">Last Name</label>
+		<input type="text" id="clientInputBusinessLastName" name="businessLastName" required autocomplete="family-name" placeholder="Enter Last Name" minlength="2" maxlength="50">
+		<div id="clientInputBusinessLastNameError" class="form-error hidden" role="alert">⚠️ Please enter a last name ⚠️</div>
+
+		<label for="clientInputBusinessCompanyName">Company Name</label>
+		<input type="text" id="clientInputBusinessCompanyName" name="businessCompanyName" required autocomplete="organization" placeholder="Enter Company Name" minlength="5" maxlength="150">
+		<div id="clientInputBusinessCompanyNameError" class="form-error hidden" role="alert">⚠️ Please enter a Company Name ⚠️</div>
+
+		<label for="clientInputBusinessCompanyTitle">Business Title or Position</label>
+		<input type="text" id="clientInputBusinessCompanyTitle" name="businessCompanyTitle" required autocomplete="organization-title" placeholder="Enter Position or Title" minlength="5" maxlength="150">
+		<div id="clientInputBusinessCompanyTitleError" class="form-error hidden" role="alert">⚠️ Please enter a Company Title such as Owner, Office Manager, Technician, etc. ⚠️</div>
+
+		<label for="clientInputBusinessEmail">Business Email Address</label>
+		<input type="email" id="clientInputBusinessEmail" name="businessEmail" required autocomplete="email" placeholder="Enter email address - example: name@domain.com" title="Enter a valid email address (example: name@example.com)" minlength="5" maxlength="254">
+		<div id="clientInputBusinessEmailError" class="form-error hidden" role="alert">⚠️ Please enter a valid business email address (example: name@example.com) ⚠️</div>
+
+		<label for="clientInputBusinessWorkPhone">Business Work Phone</label>
+		<input type="tel" id="clientInputBusinessWorkPhone" name="businessWorkPhone" autocomplete="tel" placeholder="Enter phone number - example: (123) 456-7890" inputmode="tel" minlength="10" maxlength="14" pattern="^(\+?\d{1,2}\s?)?(\(\d{3}\)|\d{3})[.\-\s]?\d{3}[.\-\s]?\d{4}$" title="Enter a valid phone number like 123-456-7890 or (123) 456-7890">
+		<div id="clientInputBusinessWorkPhoneError" class="form-error hidden" role="alert">⚠️ Please enter a valid Work Phone number. ⚠️</div>
+
+		<label for="clientInputBusinessWorkPhoneExt">Extension</label>
+		<input type="text" id="clientInputBusinessWorkPhoneExt" name="businessWorkPhoneExt" autocomplete="extension" placeholder="Enter phone extension" inputmode="numeric" pattern="\d{1,6}" maxlength="6">
+
+		<label for="clientInputBusinessCellPhone">Cell Phone</label>
+		<input type="tel" id="clientInputBusinessCellPhone" name="businessCellPhone" autocomplete="tel" placeholder="Enter phone number - example: (123) 456-7890" inputmode="tel" minlength="10" maxlength="14" pattern="^(\+?\d{1,2}\s?)?(\(\d{3}\)|\d{3})[.\-\s]?\d{3}[.\-\s]?\d{4}$" title="Enter a valid phone number like 123-456-7890 or (123) 456-7890">
+		<div id="clientInputBusinessCellPhoneError" class="form-error hidden" role="alert">⚠️ Please enter a valid Cell Phone number. ⚠️</div>
+
+		<label for="clientInputBusinessAddress">Business Address</label>
+		<input type="text" id="clientInputBusinessAddress" name="businessAddress" required autocomplete="street-address" placeholder="Enter Street Address" minlength="5" maxlength="150">
+		<div id="clientInputBusinessAddressError" class="form-error hidden" role="alert">⚠️ Please enter a valid Street Address ⚠️</div>
+
+		<label for="clientInputBusinessCity">City</label>
+		<input type="text" id="clientInputBusinessCity" name="businessCity" required autocomplete="address-level2" placeholder="Enter City Name" minlength="3" maxlength="50">
+		<div id="clientInputBusinessCityError" class="form-error hidden" role="alert">⚠️ Please enter a valid City ⚠️</div>
+
+		<label for="clientInputBusinessState">State</label>
+		<input type="text" id="clientInputBusinessState" name="businessState" required autocomplete="address-level1" placeholder="Enter State Abbreviation" minlength="2" maxlength="2" pattern="^[A-Za-z]{2}$" title="Enter a 2-letter state abbreviation (example: NC, NY, TX)">
+		<div id="clientInputBusinessStateError" class="form-error hidden" role="alert">⚠️ Please enter a valid State Abbreviation ⚠️</div>
+
+		<label for="clientInputBusinessZip">ZIP Code</label>
+		<input type="text" id="clientInputBusinessZip" name="businessZip" required autocomplete="postal-code" placeholder="Enter ZIP or ZIP+4" pattern="^\d{5}(-\d{4})?$" title="Enter a 5-digit ZIP or 9-digit ZIP+4 (e.g., 12345 or 12345-6789)" inputmode="numeric" minlength="5" maxlength="10">
+		<div id="clientInputBusinessZipError" class="form-error hidden" role="alert">⚠️ Please enter a valid Zip Code ⚠️</div>
+	</div>
+
+	</fieldset>
+	
+	<!-- 🛡️ Client's Preferred Contact Method for Technican to us to reach them 🛡️ -->
+	<h2><u>Preferred Contact Method</u></h2>
+	<fieldset>
+		<legend>Preferred Contact Method</legend>
+			<div class="form-checkbox-row">
+			<label for="contactEmail" class="label-text">Email</label>
+			<input type="checkbox" id="contactEmail" name="contactMethod[]" value="Email" aria-label="Preferred Contact Method Email">
+			</div>
+
+			<div class="form-checkbox-row">
+			<label for="contactPhone" class="label-text">Phone Call</label>
+			<input type="checkbox" id="contactPhone" name="contactMethod[]" value="Phone Call" aria-label="Preferred Contact Method Phone Call">
+			</div>
+
+			<div class="form-checkbox-row">
+			<label for="contactText" class="label-text">Text Message</label>
+			<input type="checkbox" id="contactText" name="contactMethod[]" value="Text Message" aria-label="Preferred Contact Method Text Message">
+			</div>
+			
+			<div id="contactMethodError" class="form-error hidden" role="alert">⚠️ Please select at least one preferred contact method. ⚠️</div>
+	</fieldset>
+	
+	<!-- 🛡️ Device Details Including Type, Make, Model, Serial Number 🛡️ -->
+	<h2><u>Device Information</u></h2>
+	<fieldset>
+	  <legend>Device Information</legend>
+
+	  <label for="deviceInputType">Device Type</label>
+	  <select id="deviceInputType" name="deviceType" required>
+		<option value="" selected disabled>Select Device Type</option>
+		<option value="all-in-one">All-in-One Computer</option>
+		<option value="desktop">Desktop Computer</option>
+		<option value="laptop">Laptop Computer</option>
+		<option value="gaming-pc">Gaming PC</option>
+		<option value="tablet">Tablet</option>
+		<option value="game-console">Game Console</option>
+		<option value="smartphone">Smart Phone</option>
+		<option value="storage-drive">Storage Drive (HDD/SSD)</option>
+		<option value="printer">Printer</option>
+		<option value="television">Television</option>
+		<option value="other">Other</option>
+	  </select>
+	  
+	  <div id="deviceInputCustomDeviceField" class="hidden">
+		<label for="deviceInputCustomDeviceType">Custom Device Type</label>
+		<input type="text" id="deviceInputCustomDeviceType" name="customDeviceType" minlength="5" maxlength="150" placeholder="Enter custom device type">
+	  </div>
+
+	  <label for="deviceInputBrand">Brand</label>
+	  <select id="deviceInputBrand" name="brand" required>
+		<option value="" selected disabled>Select Brand</option>
+	  </select>
+
+	  <div class="form-checkbox-row">
+		<label for="showAdvancedBrands" class="label-text">Show Advanced Brands</label>
+		<input type="checkbox" id="showAdvancedBrands" name="showAdvancedBrands" aria-label="Show advanced/niche brands">
+	  </div>
+	  
+	  <div id="deviceInputCustomBrandField" class="hidden">
+		<label for="deviceInputCustomBrand">Custom Brand</label>
+		<input type="text" id="deviceInputCustomBrand" name="customBrand" minlength="5" maxlength="150" placeholder="Enter custom brand">
+	  </div>
+
+	  <label for="deviceInputModel">Model</label>
+	  <input type="text" id="deviceInputModel" name="model" minlength="5" maxlength="150" aria-describedby="modelHelp" required placeholder="Inspiron 14 7440 2-in-1 for example">
+	  <small id="modelHelp" class="sr-only" aria-live="polite">You can find Model Numbers on a sticker underneath the device or in system settings.</small>
+	  <div id="deviceModelError" class="form-error hidden" role="alert">⚠️ Please enter a valid Model Number for your device. ⚠️</div>
+
+	  <label for="deviceInputSerial" id="serialNumberLabel">Serial Number</label>
+	  <input type="text" id="deviceInputSerial" name="serialNumber" minlength="5" maxlength="150" aria-describedby="serialNumberHelp" required placeholder="Look for a label or in system info (SN#, ST#, PN#)">
+	  <small id="serialNumberHelp" class="sr-only" aria-live="polite">You can find Serial Numbers on a sticker underneath the device or in system settings.</small>
+	  <div id="deviceSerialError" class="form-error hidden" role="alert">⚠️ Please enter a valid Serial Number for your device. ⚠️</div>
+	  
+	  <label for="deviceInputProblemDescription"><b>Additional Details:</b><br>Think of it like going to the doctor. Saying "it hurts" doesn't help. Saying "my arm hurts" helps a little. Saying "my arm hurts and I can't grip anything" helps a lot. Especially if... your hand is missing. 🤣<br><br>Be as detailed as possible. Include error messages, sounds, when the issue started, etc.</label>
+	  <textarea id="deviceInputProblemDescription" name="problemDescription" minlength="100" maxlength="2500" rows="4" required placeholder="Describe the issue in detail..."></textarea>
+	  <div id="deviceProblemDescriptionError" class="form-error hidden" role="alert">⚠️ Please provide more detail in the description. ⚠️</div>
+	  
+	<!-- 📝 Attachment checkbox styled like "Show Advanced Brands" -->
+	<div class="form-checkbox-row">
+	  <label for="toggleAttachment" class="label-text">I have an Attachment to include</label>
+	  <input type="checkbox" id="toggleAttachment" />
+	</div>
+
+	<!-- 📎 File input field (starts hidden) -->
+	<div id="attachmentContainer" style="display: none;">
+	  <label for="deviceInputAttachment">Upload Attachment (Image or PDF)</label>
+	  <input type="file" id="deviceInputAttachment" name="attachment" accept=".pdf,image/*" aria-label="Upload Attachment">
+	  <div id="deviceAttachmentError" class="form-error hidden" role="alert"></div>
+	</div>
+
+	<!-- 📁 Hidden field used by backend -->
+	<input type="hidden" name="attachmentFileName" id="attachmentFileName">
+	  
+	</fieldset>
+	<!-- 🛡️ Service Type Request from Client 🛡️ -->
+	<h2><u>Service Details</u></h2>
+	<fieldset>
+	  <legend>Service Details</legend>
+
+	  <h3>Service Type</h3>
+	  <label for="serviceInputType">What type of service are you requesting? ** All Services are by Appointment **</label>
+	  <select id="serviceInputType" name="serviceType" required>
+		<option value="" selected disabled>Select One</option>
+		<option value="Drop Off at our Shop">Drop Off at Our Shop</option>
+		<option value="Remote Session">Remote Session</option>
+		<option value="Pickup and Delivery of Equipment">Pickup and Delivery of Equipment</option>
+		<option value="Onsite Service in your Home">Onsite Service in Your Home</option>
+		<option value="Onsite Service at your Business">Onsite Service at Your Business</option>
+		<option value="In Person Consultation">In Person Consultation</option>
+		<option value="Phone Consultation">Phone Consultation</option>
+	  </select>
+
+	<!-- 🛡️ Option for client to identify another person authorized to pickup a device in the event of their absence 🛡️ -->
+	<h3>Authorized Pickup</h3>
+	<div class="form-checkbox-row">
+		<span class="label-text">Authorize Someone Else for Pickup?</span>
+		<input type="checkbox" id="serviceInputAuthorizedPickup" name="authorizedPickup" aria-label="Authorize someone else for pickup">
+	</div>
+
+	<div id="serviceInputAuthorizedPickupFields" class="hidden">
+		<p><strong>Note:</strong> Authorized Pickup Persons <u>must</u> be legal names. A government-issued Photo ID matching this name is required for equipment pickup.</p>
+
+		<label for="serviceInputAuthorizedPickupName1">Authorized Pickup Person #1 (Legal First and Last Name)</label>
+		<input type="text" id="serviceInputAuthorizedPickupName1" name="pickupName1" 
+			pattern="^[A-Za-z]+(?:\s[A-Za-z]+)+$" 
+			title="Please enter the full legal first and last name." 
+			minlength="5" maxlength="100"
+			placeholder="John Doe">
+		<div id="serviceInputAuthorizedPickupName1Error" class="form-error hidden" role="alert">
+			⚠️ Please enter a full legal First and Last Name for Authorized Pickup Person #1. ⚠️
+		</div>
+
+		<label for="serviceInputAuthorizedPickupName2">Authorized Pickup Person #2 (Legal First and Last Name)</label>
+		<input type="text" id="serviceInputAuthorizedPickupName2" name="pickupName2" 
+			pattern="^[A-Za-z]+(?:\s[A-Za-z]+)+$" 
+			title="Please enter the full legal first and last name." 
+			minlength="5" maxlength="100"
+			placeholder="Jane Doe">
+		<div id="serviceInputAuthorizedPickupName2Error" class="form-error hidden" role="alert">
+			⚠️ Please enter a full legal First and Last Name for Authorized Pickup Person #2. ⚠️
+		</div>
+	</div>
+
+	<!-- 🛡️ Requires client to agree to terms and conditions, company policies and other parameters 🛡️ -->
+	<h3>Terms and Conditions</h3>
+	<div class="form-checkbox-row">
+	  <span class="label-text">I agree to the <a href="https://www.bringingyourtechtolife.com/terms" target="_blank">Terms and Conditions</a></span>
+	  <input type="checkbox" id="termsAgreement" name="termsAgreement" value="Agreed" required>
+	  <div id="termsError" class="form-error hidden" role="alert">  ⚠️ You must agree to the Terms and Conditions before submitting. ⚠️
+	</div>
+	</div>
+	</fieldset>
+
+	<!-- 🛡️ Requires client to complete a reCAPTCHA to prove they aren't the Terminator, code added by Sarah Conner 🛡️ -->
+	<div class="g-recaptcha" data-sitekey="6Lc5-YIrAAAAAApN80HxqROf1j9Gy-wZLMKGjMag"></div>
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+	<!-- 🛡️ Submission Button 🛡️ -->
+	<button type="submit" id="submitBtn">Submit</button>
+	<div id="submissionStatus" aria-live="polite" aria-atomic="true" role="alert" style="margin-top: 20px;"></div>
+</form>
+<script>
+// =====================
+// 🔧 Section #1) CONFIGURATION SETTINGS
+// =====================
+
+// Configuration values for the repair shop's system.
+// Modify these when deploying to a different shop or backend.
+
+// Configuration for form submission
+const CONFIG = {
+  formEndpoint: 'https://script.google.com/macros/s/AKfycbxKUu4LglbgMw2biHLvi9tNtfNF4m00J2uFGczdM53sQHKrxTdmkLFVgQNh5fSKltfs/exec',
+  successRedirect: 'https://www.bringingyourtechtolife.com/submission-successful'
+};
+
+
+// Default brand dropdown placeholder
+const defaultBrandOption = `<option value="" disabled selected>Select Brand</option>`;
+
+// Base brand lists mapped to device types
+const brandDefaults = {
+    "all-in-one": ["Select Brand", "Acer", "Apple", "Asus", "Dell", "Gateway", "HP", "Lenovo", "Microsoft", "MSI", "Samsung", "Toshiba", "Other"],
+    "desktop": ["Select Brand", "Acer", "Apple", "Asus", "Compaq", "Dell", "Gateway", "HP", "Intel", "Lenovo", "Microsoft", "MSI", "Custom Built", "Other"],
+    "laptop": ["Select Brand", "Acer", "Apple", "Asus", "Dell", "Google", "HP", "IBM", "Lenovo", "Microsoft", "Samsung", "Samsung Chromebook", "Sony", "Vizio", "Other"],
+    "gaming-pc": ["Select Brand", "Custom Built", "Acer", "Alienware", "Asus", "Corsair", "CyberPower PC", "Digital Storm", "iBuyPower", "Maingear", "Micro Center", "MSI", "NZXT", "Origin PC", "Razer", "Other"],
+    "printer": ["Select Brand", "Brother", "Canon", "Dell", "Epson", "HP", "Konica Minolta", "Lexmark", "OKI", "Panasonic", "Ricoh", "Samsung", "Sharp", "Xerox", "Other"],
+    "smartphone": ["Select Brand", "Apple", "Google", "Motorola", "Nokia", "OnePlus", "Samsung", "Other"],
+    "tablet": ["Select Brand", "Amazon Kindle", "Apple", "Lenovo", "Microsoft", "RCA", "Samsung", "TCL", "Other"],
+    "game-console": ["Select Brand", "Microsoft XBox", "Nintendo", "Nvidia", "Sega", "Sony PlayStation", "Valve Steam Deck", "Other"],
+    "storage-drive": ["Select Brand", "ADATA", "Corsair", "Crucial", "Intel", "Kingston", "PNY", "Samsung", "SanDisk", "Seagate", "Toshiba", "Western Digital", "Other"],
+    "television": ["Select Brand", "Amazon", "Hisense", "Insignia", "LG", "Philips", "Samsung", "Sony", "TCL", "Vizio", "Other"],
+    "other": ["Other"]
+};
+
+// Advanced (optional) niche or specialty brands
+const advancedBrandAdditions = {
+    "all-in-one": ["Intel", "ViewSonic"],
+    "desktop": ["eMachines", "Shuttle", "Zotac"],
+    "laptop": ["Chuwi", "Clevo", "Dynabook", "Fujitsu", "Medion", "System76", "TUXEDO Computers"],
+    "gaming-pc": ["Clevo", "Falcon Northwest", "Sager", "Velocity Micro", "Xidax"],
+    "printer": ["Bixolon", "Dymo", "Kyocera", "Zebra"],
+    "smartphone": ["Fairphone", "Nothing", "TCL", "ZTE"],
+    "tablet": ["Dragon Touch", "Vankyo"],
+    "game-console": ["Atari", "Intellivision", "Logitech G Cloud"],
+    "storage-drive": ["Mushkin", "Silicon Power", "TEAMGROUP", "Transcend"],
+    "television": ["Element", "Magnavox", "Sceptre", "Westinghouse"]
+};
+
+// =====================
+// ⚙️ Section #2) RUNTIME STATE VARIABLES
+// =====================
+
+// These variables track live session state, used throughout the form’s lifecycle.
+
+// Timestamp when form was loaded (used to calculate time elapsed)
+let formStart;                      
+
+// URL reference for any image preview generated
+let imagePreviewURL = null;         
+
+// Hidden fields to capture system/browser details (populated on page load)
+const userAgent = document.getElementById("userAgent");
+const platform = document.getElementById("platform");
+const screenResolution = document.getElementById("screenResolution");
+const browserLanguage = document.getElementById("browserLanguage");
+const formTimeElapsed = document.getElementById("formTimeElapsed");
+const pageReferrer = document.getElementById("pageReferrer");
+const navigatorProperties = document.getElementById("navigatorProperties");
+
+// References to key form elements used throughout the script:
+
+// - 'form' is the main HTML <form> element that contains all user input fields.
+const form = document.getElementById("clientIntakeForm");   // Replace with your actual <form> ID
+
+// - 'submitBtn' is the <button> element that the user clicks to submit the form.
+const submitBtn = document.getElementById("submitBtn");     // Replace with your actual submit button ID
+
+// - 'submissionStatus' is a placeholder element (e.g., <div> or <span>) used to display live submission status messages to the user.
+const submissionStatus = document.getElementById("submissionStatus");  // Status message container
+
+// =====================
+// 🛡️ Section #3) BOT DETECTION & PREVENTION
+// =====================
+
+// Hidden honeypot field to trap spam bots.
+// Legitimate users will never interact with this.
+const honeypotField = document.querySelector('input[name="website"]');
+
+
+// =====================
+// 🚀 Section #4a) PAGE LOAD HANDLING
+// =====================
+//
+// Purpose:
+// On page load, we initialize all system values, dropdowns, and input formatting.
+// Importantly, we ensure the form structure and visible dropdowns are fully set
+// BEFORE prompting the user to restore any saved form data.
+// We also make sure the "Brand" dropdown always starts with "Select Brand" no matter what.
+//
+// Order of operations matters!
+// ---------------------------
+// 1️⃣ Capture system/browser info → hidden fields
+// 2️⃣ Initialize conditional sections (like personal/business fields)
+// 3️⃣ Initialize the brand dropdown to default state (with only "Select Brand")
+// 4️⃣ Attach all input formatting listeners (so if restored data comes in, it formats properly)
+// 5️⃣ After everything is ready, prompt user to restore saved data
+// 6️⃣ Re-run brand dropdown refresh (if needed after restore)
+// 7️⃣ Finally, reveal the form on-screen to avoid flicker
+// =====================
+
+window.addEventListener("DOMContentLoaded", () => {
+    // 1️⃣ Record the session start time for timing metrics
+    formStart = Date.now();
+
+    // 2️⃣ Populate hidden diagnostic fields
+    userAgent.value = navigator.userAgent;
+    platform.value = navigator.platform || "Unknown";
+    screenResolution.value = `${screen.width}x${screen.height}`;
+    browserLanguage.value = navigator.language || "Unknown";
+
+    navigatorProperties.value = [
+        navigator.hardwareConcurrency || "Unknown cores",
+        navigator.deviceMemory || "Unknown memory",
+        navigator.doNotTrack || "DoNotTrack Unknown",
+        (navigator.plugins && navigator.plugins.length) || "No plugins"
+    ].join(" | ");
+
+    // 3️⃣ Initialize conditional visibility (like client type and pickup sections)
+    updateFields();
+
+    // 4️⃣ Initialize the brand dropdown to its safe default:
+    // This clears any leftover content and ensures "Select Brand" shows first.
+    updateBrandOptions();
+
+    // 5️⃣ Attach input formatting listeners BEFORE restoring any saved data,
+    // so restored values get auto-formatted as needed.
+    setupInputFormatting();
+
+    // 6️⃣ Prompt the user to restore saved data AFTER everything is prepped.
+    // We wrap this in setTimeout to:
+    // - Avoid clashing confirm() dialogs
+    // - Let the event loop finish rendering the form base state first
+    setTimeout(() => {
+        promptToRestoreFormData();
+
+        // 7️⃣ After restore (if they chose to), refresh brand dropdown again.
+        // Why? Because restoring device type may change the available brands.
+        updateBrandOptions();
+
+        // 8️⃣ Finally, reveal the form on-screen.
+        // We delay this to avoid showing partial/incomplete setups.
+        form.classList.add("show-form");
+    }, 100);
+});
+
+
+// =====================
+// 🖇️ Section #4b) EVENT LISTENER SETUP
+// Description: Attaches all main event listeners safely (only if element exists).
+// =====================
+
+function setupEventListeners() {
+    // Client type switcher
+    if (clientType) {
+        clientType.addEventListener("change", updateFields);
+    }
+
+    // Device type selector
+    if (deviceInputType) {
+        deviceInputType.addEventListener("change", () => {
+            updateBrandOptions();
+            toggleCustomDeviceType();
+        });
+    }
+
+    // Device brand selector
+    if (deviceInputBrand) {
+        deviceInputBrand.addEventListener("change", toggleCustomBrand);
+    }
+
+    // Advanced brands toggle checkbox logic
+    if (showAdvancedBrandsCheckbox) {
+        showAdvancedBrandsCheckbox.addEventListener("change", updateBrandOptions);
+    }
+
+    // Authorized pickup toggle checkbox logic
+    if (serviceInputAuthorizedPickupCheckbox) {
+        serviceInputAuthorizedPickupCheckbox.addEventListener("change", toggleAuthorizedPickup);
+    }
+}
+
+// =====================
+// 👤 Section #5a) CLIENT TYPE HANDLING
+// =====================
+
+// Main client type selector (Personal or Business)
+const clientType = document.getElementById("clientType");
+
+// Sections that show/hide based on selected type
+const clientInputPersonalFields = document.getElementById("clientInputPersonalFields");
+const clientInputBusinessFields = document.getElementById("clientInputBusinessFields");
+
+// Function to toggle field visibility and set required attributes
+function updateFields() {
+    clientInputPersonalFields.classList.add("hidden");
+    clientInputBusinessFields.classList.add("hidden");
+
+    clientInputPersonalFields.querySelectorAll("input, select").forEach(field => field.required = false);
+    clientInputBusinessFields.querySelectorAll("input, select").forEach(field => field.required = false);
+
+    if (clientType.value === "personal") {
+        clientInputPersonalFields.classList.remove("hidden");
+        clientInputPersonalFields.querySelectorAll("input, select").forEach(field => {
+            if (field.name && !["personalHomePhone", "personalCellPhone"].includes(field.name)) {
+                field.required = true;
+            }
+        });
+    } else if (clientType.value === "business") {
+        clientInputBusinessFields.classList.remove("hidden");
+        clientInputBusinessFields.querySelectorAll("input, select").forEach(field => {
+            if (field.name && !["businessWorkPhone", "businessCellPhone", "businessWorkPhoneExt"].includes(field.name)) {
+                field.required = true;
+            }
+        });
+    }
+}
+
+// Attach event listener
+clientType.addEventListener("change", updateFields);
+
+// =====================
+// 👤 Section #5b) PERSONAL CLIENT FIELDS
+// =====================
+
+const clientInputPersonalFirstName = document.getElementById("clientInputPersonalFirstName");
+const clientInputPersonalFirstNameError = document.getElementById("clientInputPersonalFirstNameError");
+
+const clientInputPersonalLastName = document.getElementById("clientInputPersonalLastName");
+const clientInputPersonalLastNameError = document.getElementById("clientInputPersonalLastNameError");
+
+const clientInputPersonalEmail = document.getElementById("clientInputPersonalEmail");
+const clientInputPersonalEmailError = document.getElementById("clientInputPersonalEmailError");
+
+const clientInputPersonalHomePhone = document.getElementById("clientInputPersonalHomePhone");
+const clientInputPersonalHomePhoneError = document.getElementById("clientInputPersonalHomePhoneError");
+
+const clientInputPersonalCellPhone = document.getElementById("clientInputPersonalCellPhone");
+const clientInputPersonalCellPhoneError = document.getElementById("clientInputPersonalCellPhoneError");
+
+const clientInputPersonalAddress = document.getElementById("clientInputPersonalAddress");
+const clientInputPersonalAddressError = document.getElementById("clientInputPersonalAddressError");
+
+const clientInputPersonalCity = document.getElementById("clientInputPersonalCity");
+const clientInputPersonalCityError = document.getElementById("clientInputPersonalCityError");
+
+const clientInputPersonalState = document.getElementById("clientInputPersonalState");
+const clientInputPersonalStateError = document.getElementById("clientInputPersonalStateError");
+
+const clientInputPersonalZip = document.getElementById("clientInputPersonalZip");
+const clientInputPersonalZipError = document.getElementById("clientInputPersonalZipError");
+
+// =====================
+// 👤 Section #5c) BUSINESS CLIENT FIELDS
+// =====================
+
+const clientInputBusinessFirstName = document.getElementById("clientInputBusinessFirstName");
+const clientInputBusinessFirstNameError = document.getElementById("clientInputBusinessFirstNameError");
+
+const clientInputBusinessLastName = document.getElementById("clientInputBusinessLastName");
+const clientInputBusinessLastNameError = document.getElementById("clientInputBusinessLastNameError");
+
+const clientInputBusinessCompanyName = document.getElementById("clientInputBusinessCompanyName");
+const clientInputBusinessCompanyNameError = document.getElementById("clientInputBusinessCompanyNameError");
+
+const clientInputBusinessCompanyTitle = document.getElementById("clientInputBusinessCompanyTitle");
+const clientInputBusinessCompanyTitleError = document.getElementById("clientInputBusinessCompanyTitleError");
+
+const clientInputBusinessEmail = document.getElementById("clientInputBusinessEmail");
+const clientInputBusinessEmailError = document.getElementById("clientInputBusinessEmailError");
+
+const clientInputBusinessWorkPhone = document.getElementById("clientInputBusinessWorkPhone");
+const clientInputBusinessWorkPhoneError = document.getElementById("clientInputBusinessWorkPhoneError");
+
+const clientInputBusinessWorkPhoneExt = document.getElementById("clientInputBusinessWorkPhoneExt");
+
+const clientInputBusinessCellPhone = document.getElementById("clientInputBusinessCellPhone");
+const clientInputBusinessCellPhoneError = document.getElementById("clientInputBusinessCellPhoneError");
+
+const clientInputBusinessAddress = document.getElementById("clientInputBusinessAddress");
+const clientInputBusinessAddressError = document.getElementById("clientInputBusinessAddressError");
+
+const clientInputBusinessCity = document.getElementById("clientInputBusinessCity");
+const clientInputBusinessCityError = document.getElementById("clientInputBusinessCityError");
+
+const clientInputBusinessState = document.getElementById("clientInputBusinessState");
+const clientInputBusinessStateError = document.getElementById("clientInputBusinessStateError");
+
+const clientInputBusinessZip = document.getElementById("clientInputBusinessZip");
+const clientInputBusinessZipError = document.getElementById("clientInputBusinessZipError");
+
+// =====================
+// 👤 Section #5d) PREFERRED CONTACT METHOD
+// =====================
+
+const contactEmail = document.getElementById("contactEmail");
+const contactPhone = document.getElementById("contactPhone");
+const contactText = document.getElementById("contactText");
+const contactMethodError = document.getElementById("contactMethodError");
+
+// =====================
+// 💻 Section #6a) DEVICE TYPE & CUSTOM TYPE
+// =====================
+
+const deviceInputType = document.getElementById("deviceInputType");
+const deviceInputCustomDeviceType = document.getElementById("deviceInputCustomDeviceType");
+const deviceInputCustomDeviceField = document.getElementById("deviceInputCustomDeviceField");
+
+// Function to toggle visibility of custom device type input
+function toggleCustomDeviceType() {
+    if (!deviceInputType || !deviceInputCustomDeviceField || !deviceInputCustomDeviceType) return;
+
+    const selectedType = deviceInputType.value;
+
+    if (selectedType === "other") {
+        deviceInputCustomDeviceField.classList.remove("hidden");
+        deviceInputCustomDeviceType.required = true;
+    } else {
+        deviceInputCustomDeviceField.classList.add("hidden");
+        deviceInputCustomDeviceType.required = false;
+        deviceInputCustomDeviceType.value = "";
+    }
+}
+
+// Attach event listener
+deviceInputType.addEventListener("change", () => {
+    updateBrandOptions();
+    toggleCustomDeviceType();
+});
+
+// =====================
+// 💻 Section #6b) DEVICE BRAND & CUSTOM BRAND
+// =====================
+//
+// Description:
+// This section manages the Device Brand dropdown logic, including:
+// - Populating base brand options depending on device type
+// - Optionally adding advanced brands if the user checks the toggle
+// - Handling a custom brand input when "Other" is selected
+// - Making sure the dropdown always defaults to "Select Brand" on reset
+//
+// Developer Notes:
+// - We deliberately add the <option selected> on the default option
+//   so we don’t need to reset .value manually.
+// - We call toggleCustomBrand() at the end of updateBrandOptions
+//   to ensure the custom field state stays synced after updates.
+//
+
+// References
+const deviceInputBrand = document.getElementById("deviceInputBrand");
+const deviceInputCustomBrand = document.getElementById("deviceInputCustomBrand");
+const deviceInputCustomBrandField = document.getElementById("deviceInputCustomBrandField");
+const showAdvancedBrandsCheckbox = document.getElementById("showAdvancedBrands");
+
+/**
+ * toggleCustomBrand:
+ * Shows or hides the custom brand input field if "Other" is selected in the dropdown.
+ */
+function toggleCustomBrand() {
+    if (!deviceInputBrand || !deviceInputCustomBrandField || !deviceInputCustomBrand) return;
+
+    const selectedBrand = deviceInputBrand.value;
+
+    if (selectedBrand === "Other") {
+        deviceInputCustomBrandField.classList.remove("hidden");
+        deviceInputCustomBrand.required = true;
+    } else {
+        deviceInputCustomBrandField.classList.add("hidden");
+        deviceInputCustomBrand.required = false;
+        deviceInputCustomBrand.value = "";
+    }
+}
+
+/**
+ * updateBrandOptions:
+ * Dynamically rebuilds the Brand dropdown each time:
+ * 1️⃣ The device type changes
+ * 2️⃣ The "Show Advanced Brands" checkbox toggles
+ * 
+ * Always starts with the "Select Brand" option on top,
+ * followed by the base brand list (and optionally advanced brands).
+ */
+function updateBrandOptions() {
+    if (!deviceInputType || !deviceInputBrand) return;
+
+    const selectedType = deviceInputType.value;
+    const brandSelect = deviceInputBrand;
+
+    // Clear all current options
+    brandSelect.innerHTML = '';
+
+    // Add default "Select Brand" option
+    const defaultOption = document.createElement('option');
+    defaultOption.value = '';
+    defaultOption.textContent = 'Select Brand';
+    defaultOption.disabled = true;
+    defaultOption.selected = true;
+    brandSelect.appendChild(defaultOption);
+
+    // Load the base brands
+    let brands = brandDefaults[selectedType] || [];
+
+    // If advanced brands are toggled on, append them
+    if (showAdvancedBrandsCheckbox && showAdvancedBrandsCheckbox.checked) {
+        const advancedBrands = advancedBrandAdditions[selectedType] || [];
+        brands = brands.concat(advancedBrands);
+    }
+
+    // Add each brand to the dropdown
+    brands.forEach(brand => {
+        const option = document.createElement('option');
+        option.value = brand;
+        option.textContent = brand;
+        brandSelect.appendChild(option);
+    });
+
+    // Re-sync the custom brand field after rebuilding the list
+    toggleCustomBrand();
+}
+
+// Attach live event listeners
+deviceInputBrand.addEventListener("change", toggleCustomBrand);
+showAdvancedBrandsCheckbox.addEventListener("change", updateBrandOptions);
+
+// =====================
+// 💻 Section #6c) DEVICE MODEL
+// =====================
+
+const deviceInputModel = document.getElementById("deviceInputModel");
+const deviceModelError = document.getElementById("deviceModelError");
+
+// =====================
+// 💻 Section #6d) DEVICE SERIAL NUMBER
+// =====================
+
+const deviceInputSerial = document.getElementById("deviceInputSerial");
+const deviceSerialError = document.getElementById("deviceSerialError");
+
+// =====================
+// 💻 Section #6e) ADDITIONAL PROBLEM DESCRIPTION
+// =====================
+
+const deviceInputProblemDescription = document.getElementById("deviceInputProblemDescription");
+const deviceProblemDescriptionError = document.getElementById("deviceProblemDescriptionError");
+
+// =====================
+// 💻 Section #6f) ATTACHMENT HANDLING AND ATTACHMENT CONSTANTS
+// =====================
+
+// 📎 Toggle file upload visibility based on checkbox state
+const toggleAttachmentCheckbox = document.getElementById("toggleAttachment");
+
+if (toggleAttachmentCheckbox) {
+  toggleAttachmentCheckbox.addEventListener("change", toggleAttachmentField);
+}
+
+/**
+ * Shows or hides the file upload container based on checkbox status
+ */
+function toggleAttachmentField() {
+  const attachmentContainer = document.getElementById("attachmentContainer");
+  if (toggleAttachmentCheckbox && attachmentContainer) {
+    attachmentContainer.style.display = toggleAttachmentCheckbox.checked ? "block" : "none";
+  }
+}
+
+// 📏 Attachment limits and description validation
+const MAX_UPLOAD_SIZE_MB = 5;                  // Maximum upload size per file (MB)
+const MIN_PROBLEM_DESC_LENGTH = 100;           // Minimum problem description length
+const MAX_PROBLEM_DESC_LENGTH = 2500;          // Maximum problem description length
+
+
+// =====================
+// 🛠️ Section #7) SERVICE DETAILS
+// =====================
+
+const serviceInputType = document.getElementById("serviceInputType");
+
+// This dropdown captures the selected service type (e.g., Drop Off, Remote Session, Onsite Service, etc.).
+
+// =====================
+// 🛡️ Section #8a) AUTHORIZED PICKUP YES/NO TOGGLE
+// =====================
+
+// References:
+// - Checkbox that controls authorized pickup section visibility
+const serviceInputAuthorizedPickupCheckbox = document.getElementById("serviceInputAuthorizedPickup");
+
+// - Container div for authorized pickup name fields
+const serviceInputAuthorizedPickupFields = document.getElementById("serviceInputAuthorizedPickupFields");
+
+// - Name input fields (linked below in 8b)
+const serviceInputAuthorizedPickupName1 = document.getElementById("serviceInputAuthorizedPickupName1");
+const serviceInputAuthorizedPickupName2 = document.getElementById("serviceInputAuthorizedPickupName2");
+
+/**
+ * toggleAuthorizedPickup:
+ * Shows or hides the authorized pickup name fields based on the checkbox.
+ * Safely checks that all required elements exist before applying logic.
+ * Clears name inputs if section is hidden.
+ */
+function toggleAuthorizedPickup() {
+    if (!serviceInputAuthorizedPickupCheckbox || 
+        !serviceInputAuthorizedPickupFields || 
+        !serviceInputAuthorizedPickupName1 || 
+        !serviceInputAuthorizedPickupName2) {
+        console.warn("Authorized pickup elements missing — skipping toggleAuthorizedPickup()");
+        return;
+    }
+
+    if (serviceInputAuthorizedPickupCheckbox.checked) {
+        serviceInputAuthorizedPickupFields.classList.remove("hidden");
+        serviceInputAuthorizedPickupName1.required = true;
+    } else {
+        serviceInputAuthorizedPickupFields.classList.add("hidden");
+        serviceInputAuthorizedPickupName1.required = false;
+        serviceInputAuthorizedPickupName2.required = false;
+        serviceInputAuthorizedPickupName1.value = "";
+        serviceInputAuthorizedPickupName2.value = "";
+    }
+}
+
+// Attach event listener (safe)
+if (serviceInputAuthorizedPickupCheckbox) {
+    serviceInputAuthorizedPickupCheckbox.addEventListener("change", toggleAuthorizedPickup);
+}
+
+// =====================
+// 🛡️ Section #8b) AUTHORIZED PICKUP NAMES
+// =====================
+
+// References to name input fields and their error containers
+const serviceInputAuthorizedPickupName1Error = document.getElementById("serviceInputAuthorizedPickupName1Error");
+const serviceInputAuthorizedPickupName2Error = document.getElementById("serviceInputAuthorizedPickupName2Error");
+
+// =====================
+// 📜 Section #9) TERMS & CONDITIONS HANDLER
+// =====================
+
+const termsAgreementCheckbox = document.getElementById("termsAgreement");
+const termsError = document.getElementById("termsError");
+
+// Function to validate whether the terms & conditions checkbox is checked
+function validateTermsAgreement(input, errorDiv) {
+    if (!input.checked) {
+        input.classList.add("input-error");
+        errorDiv.classList.remove("hidden");
+    } else {
+        input.classList.remove("input-error");
+        errorDiv.classList.add("hidden");
+    }
+}
+
+// =====================
+// 🎛️ Section #10) FIELD VISIBILITY & TOGGLES
+// =====================
+
+// --- Client Type: Toggle between personal and business fields ---
+function updateFields() {
+    clientInputPersonalFields.classList.add("hidden");
+    clientInputBusinessFields.classList.add("hidden");
+
+    clientInputPersonalFields.querySelectorAll("input, select").forEach(field => field.required = false);
+    clientInputBusinessFields.querySelectorAll("input, select").forEach(field => field.required = false);
+
+    if (clientType.value === "personal") {
+        clientInputPersonalFields.classList.remove("hidden");
+        clientInputPersonalFields.querySelectorAll("input, select").forEach(field => {
+            if (field.name && !["personalHomePhone", "personalCellPhone"].includes(field.name)) {
+                field.required = true;
+            }
+        });
+    } else if (clientType.value === "business") {
+        clientInputBusinessFields.classList.remove("hidden");
+        clientInputBusinessFields.querySelectorAll("input, select").forEach(field => {
+            if (field.name && !["businessWorkPhone", "businessCellPhone", "businessWorkPhoneExt"].includes(field.name)) {
+                field.required = true;
+            }
+        });
+    }
+}
+
+// Attach event listener
+clientType.addEventListener("change", updateFields);
+
+// --- Device Custom Type Toggle ---
+function toggleCustomDeviceType() {
+    const selectedType = deviceInputType.value;
+
+    if (selectedType === "other") {
+        deviceInputCustomDeviceField.classList.remove("hidden");
+        deviceInputCustomDeviceType.required = true;
+    } else {
+        deviceInputCustomDeviceField.classList.add("hidden");
+        deviceInputCustomDeviceType.required = false;
+        deviceInputCustomDeviceType.value = "";
+    }
+}
+
+// --- Device Custom Brand Toggle ---
+function toggleCustomBrand() {
+    const selectedBrand = deviceInputBrand.value;
+
+    if (selectedBrand === "Other") {
+        deviceInputCustomBrandField.classList.remove("hidden");
+        deviceInputCustomBrand.required = true;
+    } else {
+        deviceInputCustomBrandField.classList.add("hidden");
+        deviceInputCustomBrand.required = false;
+        deviceInputCustomBrand.value = "";
+    }
+}
+
+// --- Authorized Pickup Toggle ---
+function toggleAuthorizedPickup() {
+    if (serviceInputAuthorizedPickupCheckbox.checked) {
+        serviceInputAuthorizedPickupFields.classList.remove("hidden");
+        serviceInputAuthorizedPickupName1.required = true;
+    } else {
+        serviceInputAuthorizedPickupFields.classList.add("hidden");
+        serviceInputAuthorizedPickupName1.required = false;
+        serviceInputAuthorizedPickupName2.required = false;
+        serviceInputAuthorizedPickupName1.value = "";
+        serviceInputAuthorizedPickupName2.value = "";
+    }
+}
+
+// Attach event listeners
+deviceInputType.addEventListener("change", () => {
+    updateBrandOptions();
+    toggleCustomDeviceType();
+});
+
+deviceInputBrand.addEventListener("change", toggleCustomBrand);
+serviceInputAuthorizedPickupCheckbox.addEventListener("change", toggleAuthorizedPickup);
+
+// --- Advanced Brands Toggle ---
+document.getElementById("showAdvancedBrands").addEventListener("change", updateBrandOptions);
+
+// =====================
+// ✏️ Section #11) INPUT FORMATTING (REALTIME)
+// =====================
+
+// --- Capitalize First Letter of Each Word ---
+function capitalizeFirstLetterWords(input) {
+    input.value = input.value
+        .toLowerCase()
+        .replace(/\b\w/g, char => char.toUpperCase());
+}
+
+// --- Phone Number Formatting (e.g., (123) 456-7890) ---
+function formatPhoneNumber(input) {
+    let cleaned = input.value.replace(/\D/g, '');
+    let formatted = '';
+
+    if (cleaned.length === 0) {
+        formatted = '';
+    } else if (cleaned.length <= 3) {
+        formatted = '(' + cleaned;
+    } else if (cleaned.length <= 6) {
+        formatted = '(' + cleaned.substring(0, 3) + ') ' + cleaned.substring(3, 6);
+    } else {
+        formatted = '(' + cleaned.substring(0, 3) + ') ' + cleaned.substring(3, 6) + '-' + cleaned.substring(6, 10);
+    }
+
+    input.value = formatted;
+}
+
+// --- Business Phone Extension → numbers only, max 5 digits ---
+if (clientInputBusinessWorkPhoneExt) {
+    clientInputBusinessWorkPhoneExt.addEventListener('input', () => {
+        let cleaned = clientInputBusinessWorkPhoneExt.value.replace(/\D/g, '');
+        clientInputBusinessWorkPhoneExt.value = cleaned.substring(0, 5);
+    });
+
+    clientInputBusinessWorkPhoneExt.addEventListener('keydown', (e) => {
+        // Allow: Backspace, Delete, Tab, Escape, Enter, Arrow keys
+        if ([46, 8, 9, 27, 13, 110, 190].includes(e.keyCode) ||
+            (e.keyCode >= 35 && e.keyCode <= 40)) {
+            return;
+        }
+        // Block if not a number key
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) &&
+            (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
+}
+
+// --- State Abbreviation Formatting (only two uppercase letters) ---
+function formatStateAbbreviation(input) {
+    let cleaned = input.value.replace(/[^a-zA-Z]/g, '').toUpperCase();
+    input.value = cleaned.substring(0, 2);
+}
+
+// --- ZIP Code Formatting (ZIP+4 if applicable) ---
+function formatZipCode(input) {
+    let cleaned = input.value.replace(/\D/g, '');
+
+    if (cleaned.length > 5) {
+        input.value = cleaned.substring(0, 5) + '-' + cleaned.substring(5, 9);
+    } else {
+        input.value = cleaned;
+    }
+}
+
+// --- Setup Input Event Listeners ---
+function setupInputFormatting() {
+    // Capitalize first + last names
+    [
+        clientInputPersonalFirstName,
+        clientInputPersonalLastName,
+        clientInputBusinessFirstName,
+        clientInputBusinessLastName
+    ].forEach(input => {
+        if (input) {
+            input.addEventListener('input', () => capitalizeFirstLetterWords(input));
+        }
+    });
+
+    // Capitalize company + title
+    [
+        clientInputBusinessCompanyName,
+        clientInputBusinessCompanyTitle
+    ].forEach(input => {
+        if (input) {
+            input.addEventListener('input', () => capitalizeFirstLetterWords(input));
+        }
+    });
+
+    // Phone fields
+    const phoneFields = [
+        clientInputPersonalHomePhone,
+        clientInputPersonalCellPhone,
+        clientInputBusinessWorkPhone,
+        clientInputBusinessCellPhone
+    ];
+
+    phoneFields.forEach(input => {
+        if (input) {
+            input.addEventListener('input', () => formatPhoneNumber(input));
+            input.addEventListener('keydown', (e) => {
+                if ([46, 8, 9, 27, 13, 110, 190].includes(e.keyCode) ||
+                    (e.keyCode >= 35 && e.keyCode <= 40)) {
+                    return;
+                }
+                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) &&
+                    (e.keyCode < 96 || e.keyCode > 105)) {
+                    e.preventDefault();
+                }
+            });
+        }
+    });
+
+    // State fields
+    [
+        clientInputPersonalState,
+        clientInputBusinessState
+    ].forEach(input => {
+        if (input) {
+            input.addEventListener('input', () => formatStateAbbreviation(input));
+        }
+    });
+
+    // ZIP fields
+    [
+        clientInputPersonalZip,
+        clientInputBusinessZip
+    ].forEach(input => {
+        if (input) {
+            input.addEventListener('input', () => formatZipCode(input));
+            input.addEventListener('paste', () => setTimeout(() => formatZipCode(input), 10));
+        }
+    });
+}
+
+// =====================
+// ✏️ Section #12) FIELD EVENT LISTENERS FOR VALIDATION
+// =====================
+
+// Client Type toggle
+clientType.addEventListener("change", () => updateFields());
+
+/*
+// Personal Fields
+clientInputPersonalFirstName.addEventListener("blur", () => validateInput(clientInputPersonalFirstName, clientInputPersonalFirstNameError));
+clientInputPersonalLastName.addEventListener("blur", () => validateInput(clientInputPersonalLastName, clientInputPersonalLastNameError));
+clientInputPersonalEmail.addEventListener("blur", () => validateEmail(clientInputPersonalEmail, clientInputPersonalEmailError));
+clientInputPersonalHomePhone.addEventListener("blur", () => validatePhoneNumber(clientInputPersonalHomePhone, clientInputPersonalHomePhoneError));
+clientInputPersonalCellPhone.addEventListener("blur", () => validatePhoneNumber(clientInputPersonalCellPhone, clientInputPersonalCellPhoneError));
+clientInputPersonalAddress.addEventListener("blur", () => validateAtLeastOnePersonalPhone()); // --- Ensure at least one phone (personal or business) is provided before address ---
+clientInputPersonalAddress.addEventListener("blur", () => validateInput(clientInputPersonalAddress, clientInputPersonalAddressError));
+clientInputPersonalCity.addEventListener("blur", () => validateInput(clientInputPersonalCity, clientInputPersonalCityError));
+clientInputPersonalState.addEventListener("blur", () => validateStateAbbreviation(clientInputPersonalState, clientInputPersonalStateError));
+clientInputPersonalZip.addEventListener("blur", () => validateZipCode(clientInputPersonalZip, clientInputPersonalZipError));
+*/
+
+// Personal Fields
+
+	// First Name → ⚠️ Please enter a first name ⚠️
+	clientInputPersonalFirstName.addEventListener("blur", () => 
+		validateName(clientInputPersonalFirstName, clientInputPersonalFirstNameError)
+	);
+	// Last Name → ⚠️ Please enter a last name ⚠️
+	clientInputPersonalLastName.addEventListener("blur", () => 
+		validateName(clientInputPersonalLastName, clientInputPersonalLastNameError)
+	);
+	// Email → ⚠️ Please enter a valid personal email address (example: name@example.com) ⚠️
+	clientInputPersonalEmail.addEventListener("blur", () => 
+		validateEmail(clientInputPersonalEmail, clientInputPersonalEmailError)
+	);
+	// Home Phone → ⚠️ Please enter a valid Home Phone number. ⚠️
+	clientInputPersonalHomePhone.addEventListener("blur", () => 
+		validatePhoneNumber(clientInputPersonalHomePhone, clientInputPersonalHomePhoneError)
+	);
+	// Cell Phone → ⚠️ Please enter a valid Cell Phone number. ⚠️
+	clientInputPersonalCellPhone.addEventListener("blur", () => 
+		validatePhoneNumber(clientInputPersonalCellPhone, clientInputPersonalCellPhoneError)
+	);
+	// After phones → ⚠️ Please provide at least one phone number (Home or Cell). ⚠️
+	clientInputPersonalAddress.addEventListener("blur", () => 
+		validateAtLeastOnePersonalPhone()
+	);
+	// Address → ⚠️ Please enter a valid Street Address ⚠️
+	clientInputPersonalAddress.addEventListener("blur", () => 
+		validateInput(clientInputPersonalAddress, clientInputPersonalAddressError)
+	);
+	// City → ⚠️ Please enter a valid City ⚠️
+	clientInputPersonalCity.addEventListener("blur", () => 
+		validateCity(clientInputPersonalCity, clientInputPersonalCityError)
+	);
+	// State → ⚠️ Please enter a valid State Abbreviation ⚠️
+	clientInputPersonalState.addEventListener("blur", () => 
+		validateStateAbbreviation(clientInputPersonalState, clientInputPersonalStateError)
+	);
+	// ZIP → ⚠️ Please enter a valid Zip Code ⚠️
+	clientInputPersonalZip.addEventListener("blur", () => 
+		validateZipCode(clientInputPersonalZip, clientInputPersonalZipError)
+	);
+
+/*
+// Business Fields
+clientInputBusinessFirstName.addEventListener("blur", () => validateInput(clientInputBusinessFirstName, clientInputBusinessFirstNameError));
+clientInputBusinessLastName.addEventListener("blur", () => validateInput(clientInputBusinessLastName, clientInputBusinessLastNameError));
+clientInputBusinessCompanyName.addEventListener("blur", () => validateInput(clientInputBusinessCompanyName, clientInputBusinessCompanyNameError));
+clientInputBusinessCompanyTitle.addEventListener("blur", () => validateInput(clientInputBusinessCompanyTitle, clientInputBusinessCompanyTitleError));
+clientInputBusinessEmail.addEventListener("blur", () => validateEmail(clientInputBusinessEmail, clientInputBusinessEmailError));
+clientInputBusinessWorkPhone.addEventListener("blur", () => validatePhoneNumber(clientInputBusinessWorkPhone, clientInputBusinessWorkPhoneError));
+clientInputBusinessCellPhone.addEventListener("blur", () => validatePhoneNumber(clientInputBusinessCellPhone, clientInputBusinessCellPhoneError));
+clientInputBusinessAddress.addEventListener("blur", () => validateAtLeastOneBusinessPhone()); // --- Ensure at least one phone (personal or business) is provided before address ---
+clientInputBusinessAddress.addEventListener("blur", () => validateInput(clientInputBusinessAddress, clientInputBusinessAddressError));
+clientInputBusinessCity.addEventListener("blur", () => validateInput(clientInputBusinessCity, clientInputBusinessCityError));
+clientInputBusinessState.addEventListener("blur", () => validateStateAbbreviation(clientInputBusinessState, clientInputBusinessStateError));
+clientInputBusinessZip.addEventListener("blur", () => validateZipCode(clientInputBusinessZip, clientInputBusinessZipError));
+*/
+
+// Business Fields
+
+	// First Name → ⚠️ Please enter a first name ⚠️
+	clientInputBusinessFirstName.addEventListener("blur", () => 
+		validateName(clientInputBusinessFirstName, clientInputBusinessFirstNameError)
+	);
+	// Last Name → ⚠️ Please enter a last name ⚠️
+	clientInputBusinessLastName.addEventListener("blur", () => 
+		validateName(clientInputBusinessLastName, clientInputBusinessLastNameError)
+	);
+	// Company Name → ⚠️ Please enter a Company Name ⚠️
+	clientInputBusinessCompanyName.addEventListener("blur", () => 
+		validateCompanyField(clientInputBusinessCompanyName, clientInputBusinessCompanyNameError)
+	);
+	// Business Title → ⚠️ Please enter a Company Title such as Owner, Office Manager, Technician, etc. ⚠️
+	clientInputBusinessCompanyTitle.addEventListener("blur", () => 
+		validateCompanyField(clientInputBusinessCompanyTitle, clientInputBusinessCompanyTitleError)
+	);
+	// Email → ⚠️ Please enter a valid business email address (example: name@example.com) ⚠️
+	clientInputBusinessEmail.addEventListener("blur", () => 
+		validateEmail(clientInputBusinessEmail, clientInputBusinessEmailError)
+	);
+	// Work Phone → ⚠️ Please enter a valid Work Phone number. ⚠️
+	clientInputBusinessWorkPhone.addEventListener("blur", () => 
+		validatePhoneNumber(clientInputBusinessWorkPhone, clientInputBusinessWorkPhoneError)
+	);
+	// Cell Phone → ⚠️ Please enter a valid Cell Phone number. ⚠️
+	clientInputBusinessCellPhone.addEventListener("blur", () => 
+		validatePhoneNumber(clientInputBusinessCellPhone, clientInputBusinessCellPhoneError)
+	);
+	// After phones → ⚠️ Please provide at least one phone number (Work or Cell). ⚠️
+	clientInputBusinessAddress.addEventListener("blur", () => 
+		validateAtLeastOneBusinessPhone()
+	);
+	// Address → ⚠️ Please enter a valid Street Address ⚠️
+	clientInputBusinessAddress.addEventListener("blur", () => 
+		validateInput(clientInputBusinessAddress, clientInputBusinessAddressError)
+	);
+	// City → ⚠️ Please enter a valid City ⚠️
+	clientInputBusinessCity.addEventListener("blur", () => 
+		validateCity(clientInputBusinessCity, clientInputBusinessCityError)
+	);
+	// State → ⚠️ Please enter a valid State Abbreviation ⚠️
+	clientInputBusinessState.addEventListener("blur", () => 
+		validateStateAbbreviation(clientInputBusinessState, clientInputBusinessStateError)
+	);
+	// ZIP → ⚠️ Please enter a valid Zip Code ⚠️
+	clientInputBusinessZip.addEventListener("blur", () => 
+		validateZipCode(clientInputBusinessZip, clientInputBusinessZipError)
+	);
+
+// Contact Method (Email, Phone, Text)
+[contactEmail, contactPhone, contactText].forEach(box =>
+    box.addEventListener("change", () => validateContactMethod(contactMethodError))
+);
+
+// Authorized Pickup Fields
+if (serviceInputAuthorizedPickupName1) {
+    serviceInputAuthorizedPickupName1.addEventListener("blur", () => 
+        validateInput(serviceInputAuthorizedPickupName1, serviceInputAuthorizedPickupName1Error)
+    );
+}
+
+if (serviceInputAuthorizedPickupName2) {
+    serviceInputAuthorizedPickupName2.addEventListener("blur", () => {
+        const value = serviceInputAuthorizedPickupName2.value.trim();
+        if (value !== "") {
+            validateInput(serviceInputAuthorizedPickupName2, serviceInputAuthorizedPickupName2Error);
+        } else {
+            // Clear any prior error if they erase the field
+            serviceInputAuthorizedPickupName2.classList.remove("input-error");
+            serviceInputAuthorizedPickupName2Error.classList.add("hidden");
+        }
+    });
+}
+
+// Device Info Fields
+
+// 🔹 Model: checks for general text input presence
+deviceInputModel.addEventListener("blur", () => 
+    validateInput(deviceInputModel, deviceModelError)
+);
+
+// 🔹 Serial Number: first general text check, then enhanced serial-specific rules
+deviceInputSerial.addEventListener("blur", () => 
+    validateInput(deviceInputSerial, deviceSerialError)
+);
+deviceInputSerial.addEventListener("blur", () => 
+    validateSerialNumber(deviceInputSerial, deviceSerialError)
+);
+
+// 🔹 Additional Details / Problem Description:
+// Attach BOTH blur and input listeners for better real-time + on-leave validation
+deviceInputProblemDescription.addEventListener("blur", () => 
+    validateProblemDescription(deviceInputProblemDescription, deviceProblemDescriptionError)
+);
+deviceInputProblemDescription.addEventListener("input", () => 
+    validateProblemDescription(deviceInputProblemDescription, deviceProblemDescriptionError)
+);
+
+// =====================
+// ✅ Section #13a) CLIENT-SIDE VALIDATION
+// =====================
+
+// --- Check for placeholder or junk responses (e.g., "n/a", "test") ---
+function isJunk(value) {
+    const junkInputs = [
+        "n/a", "na", "none", "idk", "unknown", "test", "asdf", "qwerty", "abcd", "abcde", "abcdef",
+        "123", "1234", "12345", "123456", "000", "0000", "00000", "fake", "null", "blank", "---", "...", "**", 
+        "xxx", "xxxx", "xxxxx", "tbd", "to be determined", "to be decided",
+        "a", "b", "z", "aa", "bb", "zz", "aaa", "bbb", "zzz",
+        "qwer", "zxcv", "poiuy", "lkjhg",
+        "0", "00", "111", "1111", "222", "2222",
+        "dont know", "dunno", "not applicable",
+        "testing", "test123", "sample", "example", "demo",
+        "undefined", "void", "nil", "nan",
+        "****", "///", "!!!", "???",
+        "aaaaaa", "11111",
+        "admin", "user", "guest",
+        "test@test.com", "example@example.com", "a@a.com", "email@email.com",
+        "lorem", "ipsum", "foobar", "blah", "whatever", "something",
+        " ", "-", "_", ".",
+        "idc", "k", "ok", "okay", "meh"
+    ];
+    return junkInputs.includes(value.toLowerCase());
+}
+
+// --- Generic required input field ---
+function validateInput(input, errorDiv) {
+    const value = input.value.trim();
+    if (!value || isJunk(value)) {
+        input.classList.add("input-error");
+        errorDiv.classList.remove("hidden");
+    } else {
+        input.classList.remove("input-error");
+        errorDiv.classList.add("hidden");
+    }
+}
+
+// --- First & Last Name fields: non-empty, no junk, ≥2 chars, letters/hyphen/apos only ---
+function validateName(inputElement, errorElement) {
+    const value = inputElement.value.trim();
+    const namePattern = /^[A-Za-z'’\-]{2,}$/; // at least 2 chars, allows letters, hyphen, apostrophe
+
+    let hasError = false;
+    let errorMessage = "";
+
+    if (value === "") {
+        hasError = true;
+        errorMessage = "Name cannot be empty.";
+    } else if (isJunk(value)) {
+        hasError = true;
+        errorMessage = "Please enter a valid name (not placeholder text like 'n/a' or 'test').";
+    } else if (value.length < 2) {
+        hasError = true;
+        errorMessage = "Name must be at least 2 characters long.";
+    } else if (!namePattern.test(value)) {
+        hasError = true;
+        errorMessage = "Name can only include letters, hyphens, or apostrophes.";
+    }
+
+    if (hasError) {
+        inputElement.classList.add("input-error");
+        errorElement.textContent = `⚠️ ${errorMessage} ⚠️`;
+        errorElement.classList.remove("hidden");
+    } else {
+        inputElement.classList.remove("input-error");
+        errorElement.classList.add("hidden");
+        errorElement.textContent = "";
+    }
+}
+
+// --- Company Name and Title fields: Checks non-empty, no junk, ≥2 chars, letters/numbers/common punctuation ---
+function validateCompanyField(inputElement, errorElement) {
+    const value = inputElement.value.trim();
+    const companyPattern = /^[A-Za-z0-9\s&.,’'\/\-+]{2,}$/;
+
+    let hasError = false;
+    let errorMessage = "";
+
+    if (value === "") {
+        hasError = true;
+        errorMessage = "This field cannot be empty.";
+    } else if (isJunk(value)) {
+        hasError = true;
+        errorMessage = "Please enter a valid value (not placeholder text like 'n/a' or 'test').";
+    } else if (value.length < 2) {
+        hasError = true;
+        errorMessage = "Value must be at least 2 characters long.";
+    } else if (!companyPattern.test(value)) {
+        hasError = true;
+        errorMessage = "Only letters, numbers, spaces, and common symbols (&, /, -, +, .) allowed.";
+    }
+
+    if (hasError) {
+        inputElement.classList.add("input-error");
+        errorElement.textContent = `⚠️ ${errorMessage} ⚠️`;
+        errorElement.classList.remove("hidden");
+    } else {
+        inputElement.classList.remove("input-error");
+        errorElement.classList.add("hidden");
+        errorElement.textContent = "";
+    }
+}
+
+// --- Email field: Email format ---
+function validateEmail(input, errorDiv) {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(input.value.trim())) {
+        input.classList.add("input-error");
+        errorDiv.classList.remove("hidden");
+    } else {
+        input.classList.remove("input-error");
+        errorDiv.classList.add("hidden");
+    }
+}
+
+// --- Phone fields: Phone number format (must be 10 digits) ---
+function validatePhoneNumber(input, errorDiv) {
+    const cleaned = input.value.replace(/\D/g, '');
+    const phonePattern = /^\d{10}$/;
+
+    if (cleaned.length === 0) {
+        input.classList.remove("input-error");
+        errorDiv.classList.add("hidden");
+    } else if (!phonePattern.test(cleaned)) {
+        input.classList.add("input-error");
+        errorDiv.classList.remove("hidden");
+    } else {
+        input.classList.remove("input-error");
+        errorDiv.classList.add("hidden");
+    }
+}
+
+// --- Personal phones: ensure at least one (home or cell) is provided ---
+function validateAtLeastOnePersonalPhone() {
+    const homeValue = clientInputPersonalHomePhone.value.trim();
+    const cellValue = clientInputPersonalCellPhone.value.trim();
+
+    if (homeValue === "" && cellValue === "") {
+        clientInputPersonalHomePhone.classList.add("input-error");
+        clientInputPersonalCellPhone.classList.add("input-error");
+
+        clientInputPersonalHomePhoneError.textContent = "⚠️ Please provide at least one phone number (Home or Cell). ⚠️";
+        clientInputPersonalHomePhoneError.classList.remove("hidden");
+
+        clientInputPersonalCellPhoneError.textContent = "⚠️ Please provide at least one phone number (Home or Cell). ⚠️";
+        clientInputPersonalCellPhoneError.classList.remove("hidden");
+
+        return false;
+    } else {
+        // Clear errors if at least one is provided
+        clientInputPersonalHomePhoneError.classList.add("hidden");
+        clientInputPersonalCellPhoneError.classList.add("hidden");
+        clientInputPersonalHomePhone.classList.remove("input-error");
+        clientInputPersonalCellPhone.classList.remove("input-error");
+
+        return true;
+    }
+}
+
+ // --- Business phones: ensure at least one (work or cell) is provided ---
+function validateAtLeastOneBusinessPhone() {
+    const workValue = clientInputBusinessWorkPhone.value.trim();
+    const cellValue = clientInputBusinessCellPhone.value.trim();
+
+    if (workValue === "" && cellValue === "") {
+        clientInputBusinessWorkPhone.classList.add("input-error");
+        clientInputBusinessCellPhone.classList.add("input-error");
+
+        clientInputBusinessWorkPhoneError.textContent = "⚠️ Please provide at least one phone number (Work or Cell). ⚠️";
+        clientInputBusinessWorkPhoneError.classList.remove("hidden");
+
+        clientInputBusinessCellPhoneError.textContent = "⚠️ Please provide at least one phone number (Work or Cell). ⚠️";
+        clientInputBusinessCellPhoneError.classList.remove("hidden");
+
+        return false;
+    } else {
+        clientInputBusinessWorkPhoneError.classList.add("hidden");
+        clientInputBusinessCellPhoneError.classList.add("hidden");
+        clientInputBusinessWorkPhone.classList.remove("input-error");
+        clientInputBusinessCellPhone.classList.remove("input-error");
+
+        return true;
+    }
+}
+
+// --- City field: Checks non-empty, no junk, ≥2 chars, letters/hyphen/apos only ---
+function validateCity(inputElement, errorElement) {
+    const value = inputElement.value.trim();
+    const cityPattern = /^[A-Za-z'’\-\s]{2,}$/;
+
+    let hasError = false;
+    let errorMessage = "";
+
+    if (value === "") {
+        hasError = true;
+        errorMessage = "City cannot be empty.";
+    } else if (isJunk(value)) {
+        hasError = true;
+        errorMessage = "Please enter a valid city name (not placeholder text like 'n/a' or 'test').";
+    } else if (value.length < 2) {
+        hasError = true;
+        errorMessage = "City must be at least 2 characters long.";
+    } else if (!cityPattern.test(value)) {
+        hasError = true;
+        errorMessage = "City can only include letters, spaces, hyphens, or apostrophes.";
+    }
+
+    if (hasError) {
+        inputElement.classList.add("input-error");
+        errorElement.textContent = `⚠️ ${errorMessage} ⚠️`;
+        errorElement.classList.remove("hidden");
+    } else {
+        inputElement.classList.remove("input-error");
+        errorElement.classList.add("hidden");
+        errorElement.textContent = "";
+    }
+}
+
+// --- State field: State abbreviation (must be valid U.S. state) ---
+function validateStateAbbreviation(input, errorDiv) {
+    const validStates = [
+        "AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA",
+        "HI","ID","IL","IN","IA","KS","KY","LA","ME","MD",
+        "MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ",
+        "NM","NY","NC","ND","OH","OK","OR","PA","RI","SC",
+        "SD","TN","TX","UT","VT","VA","WA","WV","WI","WY"
+    ];
+
+    const value = input.value.trim().toUpperCase();
+
+    if (value === "") {
+        input.classList.remove("input-error");
+        errorDiv.classList.add("hidden");
+        return;
+    }
+
+    if (!validStates.includes(value)) {
+        input.classList.add("input-error");
+        errorDiv.classList.remove("hidden");
+    } else {
+        input.classList.remove("input-error");
+        errorDiv.classList.add("hidden");
+    }
+}
+
+// --- ZIP field: ZIP code format (5-digit or ZIP+4) ---
+function validateZipCode(input, errorDiv) {
+    const zipPattern = /^\d{5}(-\d{4})?$/;
+
+    if (input.value.trim() === "") {
+        input.classList.remove("input-error");
+        errorDiv.classList.add("hidden");
+    } else if (!zipPattern.test(input.value.trim())) {
+        input.classList.add("input-error");
+        errorDiv.classList.remove("hidden");
+    } else {
+        input.classList.remove("input-error");
+        errorDiv.classList.add("hidden");
+    }
+}
+
+// --- Contact method: at least one option selected ---
+function validateContactMethod(errorDiv) {
+    const anyChecked = contactEmail.checked || contactPhone.checked || contactText.checked;
+    if (!anyChecked) {
+        errorDiv.classList.remove("hidden");
+    } else {
+        errorDiv.classList.add("hidden");
+    }
+}
+
+// --- Serial number: validate non-empty, no junk, min length ---
+function validateSerialNumber(inputElement, errorElement) {
+    const value = inputElement.value.trim();
+
+    let hasError = false;
+    let errorMessage = "";
+
+    if (value === "") {
+        hasError = true;
+        errorMessage = "Serial number cannot be empty.";
+    } else if (isJunk(value)) {
+        hasError = true;
+        errorMessage = "Please enter a valid serial number (not placeholder text like 'n/a' or 'test').";
+    } else if (value.length < 5) {
+        hasError = true;
+        errorMessage = "Serial number must be at least 5 characters long.";
+    }
+
+    if (hasError) {
+        inputElement.classList.add("input-error");
+        errorElement.textContent = `⚠️ ${errorMessage} ⚠️`;
+        errorElement.classList.remove("hidden");
+    } else {
+        inputElement.classList.remove("input-error");
+        errorElement.classList.add("hidden");
+        errorElement.textContent = "";
+    }
+}
+
+// --- Problem description: meets min/max length and not junk ---
+function validateProblemDescription(input, errorDiv) {
+	const value = input.value.trim();
+	const tooShort = value.length < MIN_PROBLEM_DESC_LENGTH;
+	const tooLong = value.length > MAX_PROBLEM_DESC_LENGTH;
+	const isBad = isJunk(value);
+
+	if (tooShort || tooLong || isBad) {
+		input.classList.add("input-error");
+		errorDiv.textContent = `⚠️ Description must be between ${MIN_PROBLEM_DESC_LENGTH} and ${MAX_PROBLEM_DESC_LENGTH} characters and must not contain junk text. ⚠️`;
+		errorDiv.classList.remove("hidden");
+	} else {
+		input.classList.remove("input-error");
+		errorDiv.classList.add("hidden");
+	}
+}
+
+// --- Full legal name (first + last) if needed ---
+function validateFullName(input, errorDiv) {
+    const value = input.value.trim();
+    const pattern = /^[A-Za-z]+(?:\s[A-Za-z]+)+$/;
+
+    if (value && !pattern.test(value)) {
+        input.classList.add("input-error");
+        errorDiv.classList.remove("hidden");
+    } else {
+        input.classList.remove("input-error");
+        errorDiv.classList.add("hidden");
+    }
+}
+
+// =====================
+// 🔁 Section #13b) FIELD NORMALIZATION FOR BACKEND
+// =====================
+// Description: Converts Personal/Business form field names to a unified set of backend keys.
+// Ensures the backend script always receives standard field names regardless of client type.
+
+// 🧠 Normalize field names for backend (firstName, lastName, emailAddress, etc.)
+const clientTypeSelected = formData.get("clientType");
+
+if (clientTypeSelected === "personal") {
+  formData.append("firstName", formData.get("personalFirstName"));
+  formData.append("lastName", formData.get("personalLastName"));
+  formData.append("emailAddress", formData.get("personalEmail"));
+  formData.append("homePhone", formData.get("personalHomePhone"));
+  formData.append("cellPhone", formData.get("personalCellPhone"));
+  formData.append("address", formData.get("personalAddress"));
+  formData.append("city", formData.get("personalCity"));
+  formData.append("state", formData.get("personalState"));
+  formData.append("zip", formData.get("personalZip"));
+} else if (clientTypeSelected === "business") {
+  formData.append("firstName", formData.get("businessFirstName"));
+  formData.append("lastName", formData.get("businessLastName"));
+  formData.append("emailAddress", formData.get("businessEmail"));
+  formData.append("companyName", formData.get("businessCompanyName"));
+  formData.append("companyTitle", formData.get("businessCompanyTitle"));
+  formData.append("workPhone", formData.get("businessWorkPhone"));
+  formData.append("workExt", formData.get("businessWorkPhoneExt"));
+  formData.append("cellPhone", formData.get("businessCellPhone"));
+  formData.append("address", formData.get("businessAddress"));
+  formData.append("city", formData.get("businessCity"));
+  formData.append("state", formData.get("businessState"));
+  formData.append("zip", formData.get("businessZip"));
+}
+
+/* COMMENTED OUT THIS SECTION FOR TROUBLOESHOOTING ON 06-20-2025 PREVIOUSLY JUST THE INDENTED SECTION BELOW WAS COMMENTED OUT.....
+// =====================
+// 💾 Section #14a) LOCAL STORAGE ENGINE (CORE FUNCTIONS)
+// Description: Handles saving, loading, clearing, and debounce for localStorage.
+// This layer ONLY manages data — no user interactions.
+// =====================
+
+const localStorageSettings = {
+    savedKeysAllowed: [
+        "clientType",
+        "personalFirstName", "personalLastName", "personalEmail", "personalHomePhone", "personalCellPhone",
+        "personalAddress", "personalCity", "personalState", "personalZip",
+        "businessFirstName", "businessLastName", "businessCompanyName", "businessCompanyTitle",
+        "businessEmail", "businessWorkPhone", "businessWorkPhoneExt", "businessCellPhone",
+        "businessAddress", "businessCity", "businessState", "businessZip",
+        "contactMethod[]",
+        "deviceType", "customDeviceType", "brand", "customBrand", "model", "serialNumber",
+        "problemDescription", "attachmentFileName",
+        "serviceType", "authorizedPickup", "pickupName1", "pickupName2",
+        "termsAgreement"
+    ]
+};
+
+// Save form data into localStorage
+function saveFormData() {
+    const formData = new FormData(form);
+    const entries = {};
+
+    for (const [key, value] of formData.entries()) {
+        if (localStorageSettings.savedKeysAllowed.includes(key)) {
+            entries[key] = value;
+        }
+    }
+
+    localStorage.setItem("repairFormData", JSON.stringify(entries));
+}
+
+																														
+																														// Load saved form data (used by prompt or internal calls and includes the Device Brand)
+																														function loadFormData() {
+																															const savedData = JSON.parse(localStorage.getItem("ticketFormData"));
+																															if (!savedData) return;
+
+																															for (const [key, value] of Object.entries(savedData)) {
+																																const el = document.getElementById(key);
+																																if (!el) continue;
+
+																																if (el.type === "checkbox" && el.name === "contactMethod[]") {
+																																	// Handle preferred contact method checkboxes
+																																	const checkboxes = document.querySelectorAll('input[name="contactMethod[]"]');
+																																	checkboxes.forEach(box => {
+																																		box.checked = Array.isArray(value)
+																																			? value.includes(box.value)
+																																			: value === box.value;
+																																	});
+																																} else if (el.type === "checkbox") {
+																																	el.checked = value === true || value === "true";
+																																} else if (el.type === "radio") {
+																																	const radio = document.querySelector(`input[name="${el.name}"][value="${value}"]`);
+																																	if (radio) radio.checked = true;
+																																} else {
+																																	el.value = value;
+																																}
+																															}
+
+																															// Handle dependent fields AFTER all values loaded
+																															if (savedData["deviceInputType"]) {
+																																deviceInputType.value = savedData["deviceInputType"];
+																																updateBrandOptions();
+
+																																// Restore the brand AFTER dropdown rebuild
+																																if (savedData["deviceInputBrand"]) {
+																																	deviceInputBrand.value = savedData["deviceInputBrand"];
+																																}
+																															}
+
+																															// If authorized pickup was checked, make sure fields are shown
+																															if (savedData["serviceInputAuthorizedPickup"] === true || savedData["serviceInputAuthorizedPickup"] === "true") {
+																																serviceInputAuthorizedPickupCheckbox.checked = true;
+																																toggleAuthorizedPickup();
+																															}
+																														}
+																														*/
+
+
+																														/*
+																														// doesn't include device brand and is held for testing
+																														// Load saved form data (used by prompt or internal calls)
+																														function loadFormData() {
+																															const saved = localStorage.getItem("repairFormData");
+																															if (!saved) return;
+
+																															const data = JSON.parse(saved);
+
+																															Object.entries(data).forEach(([key, value]) => {
+																																const el = form.elements[key];
+																																if (!el) return;
+
+																																if (el.type === "checkbox" || el.type === "radio") {
+																																	if (Array.isArray(value)) {
+																																		value.forEach(val => {
+																																			const checkbox = [...form.elements[key]].find(i => i.value === val);
+																																			if (checkbox) checkbox.checked = true;
+																																		});
+																																	} else {
+																																		el.checked = value === "true" || value === "on";
+																																	}
+																																} else {
+																																	el.value = value;
+																																}
+																															});
+
+																															// Re-run toggles to match loaded values
+																															updateFields();
+																															toggleCustomDeviceType();
+																															toggleCustomBrand();
+																															toggleAuthorizedPickup();
+																														}
+																														
+
+// Clear saved form data from localStorage
+function clearFormData() {
+    localStorage.removeItem("repairFormData");
+}
+
+// Simple debounce utility to avoid excessive saves
+function debounce(fn, delay) {
+    let timer;
+    return function (...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => fn.apply(this, args), delay);
+    };
+}
+
+// Attach autosave on input (debounced)
+form.addEventListener("input", debounce(saveFormData, 800));
+
+// =====================
+// 🛎️ Section #14b) USER RESTORE PROMPT (ON PAGE LOAD)
+// Description: On page load, checks if saved data exists and asks user if they want to restore it or clear it.
+// =====================
+
+function promptToRestoreFormData() {
+    const saved = localStorage.getItem("repairFormData");
+    if (!saved) return;
+
+    const restoreMessage = 
+        "We found saved form data from your last visit to this site.\n" +
+        "Would you like to restore your previous information or clear it and start fresh?";
+
+    if (confirm(restoreMessage)) {
+        loadFormData();
+    } else {
+        clearFormData();
+    }
+}
+
+// Hook into page load
+window.addEventListener("load", () => {
+    promptToRestoreFormData();
+});
+*/
+// =====================
+// 🧹 #15a) FORM RESET ENGINE (CORE FUNCTION)
+// Description: Clears all form fields, resets toggles, clears localStorage, revokes previews, and cleans state.
+// This does NOT ask the user — it performs a hard reset.
+// =====================
+
+function resetForm() {
+    form.reset();
+
+    updateFields();
+    toggleCustomDeviceType();
+    toggleCustomBrand();
+    toggleAuthorizedPickup();
+
+    clearFormData();
+
+    if (window._previewURLs) {
+        window._previewURLs.forEach(url => URL.revokeObjectURL(url));
+        window._previewURLs = [];
+    }
+
+    document.getElementById("attachmentFileName").value = "";
+    document.getElementById("submissionStatus").innerHTML = "";
+}
+
+// =====================
+// 🧹 Section #15b) OPTIONAL USER RESET PROMPT (IF USED)
+// Description: Provides a wrapper to ask the user before clearing all data.
+// Use this if attaching to a manual "Reset" button or sensitive action.
+// =====================
+
+function resetFormWithPrompt() {
+    if (confirm("Are you sure you want to clear all entered information? This will erase everything you've filled out and any saved progress.")) {
+        resetForm();
+    }
+}
+
+// =====================
+// 📤 Section #16) FORM SUBMISSION LOGIC
+// Description: Handles form validation, backend submission, success/error handling, and post-submit actions.
+// After success, asks user whether to keep or clear their entered data.
+// =====================
+
+form.addEventListener("submit", async function (event) {
+  event.preventDefault();
+
+  submitBtn.disabled = true;
+  submissionStatus.textContent = "Submitting... Please wait.";
+
+  try {
+    const formData = new FormData(form);
+
+	// ✅ Get a reference to the checkbox that controls whether file upload is enabled
+	const attachmentCheckbox = document.getElementById("toggleAttachment");
+
+	// ✅ Check if the checkbox exists and is currently checked (i.e., user opted to upload a file)
+	if (attachmentCheckbox && attachmentCheckbox.checked) {
+
+	  // ✅ If checkbox is checked, find the actual file input element
+	  const attachmentInput = document.getElementById("deviceInputAttachment");
+
+	  // ✅ Check that the file input exists and that the user selected at least one file
+	  if (attachmentInput && attachmentInput.files.length > 0) {
+
+		// ✅ Grab the first file from the list (this form only allows one)
+		const file = attachmentInput.files[0];
+
+		// ✅ Append the file to the FormData object being submitted to Google Apps Script
+		formData.append("attachment", file);
+
+		// ✅ Also include the original filename separately (used in your backend or logs)
+		formData.append("attachmentFileName", file.name);
+	  }
+	}
+
+    // 🧠 Normalize field names for backend (firstName, lastName, emailAddress, etc.)
+    const clientTypeSelected = formData.get("clientType");
+
+    if (clientTypeSelected === "personal") {
+      formData.append("firstName", formData.get("personalFirstName"));
+      formData.append("lastName", formData.get("personalLastName"));
+      formData.append("emailAddress", formData.get("personalEmail"));
+      formData.append("homePhone", formData.get("personalHomePhone"));
+      formData.append("cellPhone", formData.get("personalCellPhone"));
+      formData.append("address", formData.get("personalAddress"));
+      formData.append("city", formData.get("personalCity"));
+      formData.append("state", formData.get("personalState"));
+      formData.append("zip", formData.get("personalZip"));
+    } else if (clientTypeSelected === "business") {
+      formData.append("firstName", formData.get("businessFirstName"));
+      formData.append("lastName", formData.get("businessLastName"));
+      formData.append("emailAddress", formData.get("businessEmail"));
+      formData.append("companyName", formData.get("businessCompanyName"));
+      formData.append("companyTitle", formData.get("businessCompanyTitle"));
+      formData.append("workPhone", formData.get("businessWorkPhone"));
+      formData.append("workExt", formData.get("businessWorkPhoneExt"));
+      formData.append("cellPhone", formData.get("businessCellPhone"));
+      formData.append("address", formData.get("businessAddress"));
+      formData.append("city", formData.get("businessCity"));
+      formData.append("state", formData.get("businessState"));
+      formData.append("zip", formData.get("businessZip"));
+    }
+
+    const response = await fetch(CONFIG.formEndpoint, {
+      method: "POST",
+      body: formData
+    });
+
+    if (!response.ok) {
+      throw new Error(`Server responded with status ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    if (result.success) {
+      alert("✅ Your ticket was submitted successfully! Please check your email for details.");
+
+      if (confirm("Would you like to keep your entered information saved for future use?")) {
+        // Keep localStorage → do nothing
+      } else {
+        resetForm();
+      }
+
+      submissionStatus.textContent = "✅ Submission successful!";
+    } else {
+      submissionStatus.textContent = "⚠️ Submission failed. Please review the errors and try again.";
+      if (result.errors) {
+        const errorList = result.errors.map(err => `- ${err}`).join("\n");
+        alert(`⚠️ There were issues:\n${errorList}`);
+      }
+    }
+  } catch (error) {
+    console.error("Submission error:", error);
+    alert("❌ There was an error submitting your ticket. Please try again.");
+    submissionStatus.textContent = "❌ Submission failed.";
+  } finally {
+    submitBtn.disabled = false;
+  }
+});
+
+
+</script>
+
+</body>
+</html>
