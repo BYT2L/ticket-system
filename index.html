@@ -295,7 +295,7 @@
 </head>
 <body>
   <!-- 🛡 FORM CONTENT STARTS HERE 🛡 -->
-    <form id="clientIntakeForm" action="https://script.google.com/macros/s/AKfycbxKUu4LglbgMw2biHLvi9tNtfNF4m00J2uFGczdM53sQHKrxTdmkLFVgQNh5fSKltfs/exec" method="POST">
+    <form id="clientIntakeForm">
 	<input type="text" name="website" style="display:none !important;" tabindex="-1" autocomplete="off">
 	<input type="hidden" name="userAgent" id="userAgent" autocomplete="off">
 	<input type="hidden" name="platform" id="platform" autocomplete="off">
@@ -2118,6 +2118,9 @@ form.addEventListener("submit", async function (event) {
 
   try {
     const formData = new FormData(form);
+	
+	const recaptchaToken = grecaptcha.getResponse();
+		formData.append("g-recaptcha-response", recaptchaToken);
 
 	// ✅ Get a reference to the checkbox that controls whether file upload is enabled
 	const attachmentCheckbox = document.getElementById("toggleAttachment");
